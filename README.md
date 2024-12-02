@@ -2,7 +2,7 @@
 
 My solutions to the [Advent of Code][1] puzzles written in the
 [Clojure][2] programming language. I love solving programming
-puzzles, and I my clojure was getting a little rusty.
+puzzles, and my clojure was getting a little rusty.
 
 Given that, these are just my solutions to the problems.
 There are likely cleaner, faster or more idiomatic ways to
