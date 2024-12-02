@@ -1,4 +1,4 @@
-# advent-of-code-dart
+# advent-of-code-clojure
 
 My solutions to the [Advent of Code][1] puzzles written in the
 [Clojure][2] programming language. I love solving programming
