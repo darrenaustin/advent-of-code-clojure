@@ -13,7 +13,7 @@
   (some
    (fn [{:keys [year day-num]}]
      (and (= (:year day) year)
-          (or (= (:day day) day-num)
+          (or (= (:day-num day) day-num)
               (nil? day-num))))
    filters))
 

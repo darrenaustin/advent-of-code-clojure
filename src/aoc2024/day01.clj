@@ -23,6 +23,6 @@
         freqs (frequencies right)]
     (m/sum (map #(similarity % freqs) left))))
 
-(def day {:year 2024 :day 1,
+(def day {:year 2024 :day-num 1,
           :name "Historian Hysteria"
           :part1 part1, :part2 part2})

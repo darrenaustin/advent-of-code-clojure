@@ -19,6 +19,6 @@
         (recur (rest commands) (+ sum (mult-instruction command))))
       sum)))
 
-(def day {:year 2024 :day 3,
+(def day {:year 2024 :day-num 3,
           :name "Mull It Over"
           :part1 part1, :part2 part2})

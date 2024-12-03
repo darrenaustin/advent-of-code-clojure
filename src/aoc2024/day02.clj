@@ -27,6 +27,6 @@
 (defn part2 [input]
   (count (filter safe-ish (parse-reports input))))
 
-(def day {:year 2024 :day 2,
+(def day {:year 2024 :day-num 2,
           :name "Red-Nosed Reports"
           :part1 part1, :part2 part2})

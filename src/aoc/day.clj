@@ -5,20 +5,20 @@
 ;; TODO: add a way to override this with an env var.
 (def input-repo-dir "../advent_of_code_input")
 
-(defn input-file-name [year day]
-  (format "%s/%04d/%02d_input.txt" input-repo-dir year day))
+(defn input-file-name [year day-num]
+  (format "%s/%04d/%02d_input.txt" input-repo-dir year day-num))
 
-(defn day-input [{:keys [year day]}]
+(defn day-input [{:keys [year day-num]}]
   (try
-    (string/trimr (slurp (input-file-name year day)))
+    (string/trimr (slurp (input-file-name year day-num)))
     (catch Exception _ "")))
 
-(defn answer-file-name [year day]
-  (format "%s/%04d/%02d_answer.json" input-repo-dir year day))
+(defn answer-file-name [year day-num]
+  (format "%s/%04d/%02d_answer.json" input-repo-dir year day-num))
 
-(defn day-answers [{:keys [year day]}]
+(defn day-answers [{:keys [year day-num]}]
   (try
-    (json/read-str (slurp (answer-file-name year day)) :key-fn keyword)
+    (json/read-str (slurp (answer-file-name year day-num)) :key-fn keyword)
     (catch Exception _ {})))
 
 (defn part1
@@ -49,7 +49,7 @@
     (println (format "%s, %s%s ms" answer correct time))))
 
 (defn execute [day]
-  (let [{year :year day-num :day name :name :or {name ""} part1 :part1 part2 :part2} day
+  (let [{:keys [year day-num name part1 part2]} day
         input (day-input day)
         answers (day-answers day)]
     (println (format "%d Day %d: %s" year, day-num name))

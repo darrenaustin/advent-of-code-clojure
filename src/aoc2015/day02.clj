@@ -27,6 +27,6 @@
 (defn part2 [input]
   (m/sum (map ribbon-for (parse-boxes input))))
 
-(def day {:year 2015 :day 2,
+(def day {:year 2015 :day-num 2,
           :name "I Was Told There Would Be No Math"
           :part1 part1, :part2 part2})

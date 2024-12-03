@@ -18,6 +18,6 @@
    [[0 0]]
    input))
 
-(def day {:year 2015 :day 1,
+(def day {:year 2015 :day-num 1,
           :name "Not Quite Lisp"
           :part1 part1, :part2 part2})
