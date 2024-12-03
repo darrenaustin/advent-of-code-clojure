@@ -32,13 +32,13 @@ Which as noted above requires the input files to be in a sibling repo.
 To run just a specific year's solutions:
 
 ```shell
-clj -M -m aoc.core -y 2020
+clj -M -m aoc.core 2020
 ```
 
-To run only specific days you can use:
+To run only specific days you can use any number YYYY.DD arguments:
 
 ```shell
-clj -M -m aoc.core -y 2020 10 11 12
+clj -M -m aoc.core 2020.3 2024.1
 ```
 
 ## Tests
