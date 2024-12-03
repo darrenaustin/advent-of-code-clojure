@@ -16,15 +16,15 @@
     (is (= 11 (part1 day example-input)))))
 
 (deftest part1-test
-  (testing "part1 correct answer")
-  (let [answer (:answer1 (day-answers day))]
-    (is (= answer (part1 day)))))
+  (testing "part1 correct answer"
+    (let [answer (:answer1 (day-answers day))]
+      (is (= answer (part1 day))))))
 
 (deftest part2-test-example
   (testing "part 2 example"
     (is (= 31 (part2 day example-input)))))
 
 (deftest part2-test
-  (testing "part2 correct answer")
-  (let [answer (:answer2 (day-answers day))]
-    (is (= answer (part2 day)))))
+  (testing "part2 correct answer"
+    (let [answer (:answer2 (day-answers day))]
+      (is (= answer (part2 day))))))
