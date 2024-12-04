@@ -45,7 +45,7 @@
 
 (defn x-mas-at? [grid pos]
   ;; assumes there is an 'A' in the grid at pos.
-  (let [left-up(grid-value grid (mapv + pos [-1 -1]))
+  (let [left-up (grid-value grid (mapv + pos [-1 -1]))
         left-down (grid-value grid (mapv + pos [-1 1]))
         right-up (grid-value grid (mapv + pos [1 -1]))
         right-down (grid-value grid (mapv + pos [1 1]))]
