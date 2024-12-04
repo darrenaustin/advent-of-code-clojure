@@ -1,13 +1,8 @@
 (ns aoc.core
   (:require
    [aoc.day :as day]
-   [aoc2015.year :as year2015]
-   [aoc2024.year :as year2024])
+   [aoc.days :refer [days]])
   (:gen-class))
-
-(def days
-  (concat year2015/days
-          year2024/days))
 
 (defn matching-day? [day filters]
   (some
