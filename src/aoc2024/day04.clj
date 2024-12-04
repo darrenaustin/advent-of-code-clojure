@@ -2,6 +2,7 @@
 
 (ns aoc2024.day04
   (:require
+   [aoc.util.collection :as c]
    [aoc.util.math :as m]
    [clojure.string :as str]))
 
@@ -22,7 +23,7 @@
   (for [x [-1 0 1] y [-1 0 1] :when (not= 0 x y)]
     [x y]))
 
-(def xmas (map-indexed (fn [idx letter] [idx letter]) "XMAS"))
+(def xmas (c/indexed "XMAS"))
 
 (defn xmas-in-dir? [grid [x y] [dx dy]]
   (every?
