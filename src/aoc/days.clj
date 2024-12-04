@@ -9,11 +9,13 @@
    [aoc2015.day02]
    [aoc2024.day01]
    [aoc2024.day02]
-   [aoc2024.day03]))
+   [aoc2024.day03]
+   [aoc2024.day04]))
 
 (def days
   [aoc2015.day01/day
    aoc2015.day02/day
    aoc2024.day01/day
    aoc2024.day02/day
-   aoc2024.day03/day])
+   aoc2024.day03/day
+   aoc2024.day04/day])
