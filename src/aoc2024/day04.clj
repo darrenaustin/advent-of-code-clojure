@@ -52,10 +52,12 @@
 
 (defn x-mas-in [grid]
   (count
-   (let [a-positions (for [y (range 0 (count grid))
-                           x (range 0 (count (first grid)))
-                           :when (= \A (grid-value grid [x y]))]
-                       [x y])]
+   (let [a-positions
+         (for [y (range 0 (count grid))
+               x (range 0 (count (first grid)))
+               :let [pos [x y]]
+               :when (= \A (grid-value grid pos))]
+           pos)]
      (filter #(x-mas-at? grid %) a-positions))))
 
 (defn part2 [input]
