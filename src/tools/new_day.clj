@@ -78,9 +78,11 @@
         answer-file (io/file (format "%s/%04d/%02d_answer.json" d/input-repo-dir, year day-num))]
     (when (not (.exists dir))
       (.mkdirs dir))
-    (.createNewFile input-file)
-    (with-open [wrtr (io/writer answer-file)]
-      (.write wrtr "{}\n"))))
+    (when (not (.exists input-file))
+      (.createNewFile input-file))
+    (when (not (.exists answer-file))
+      (with-open [wrtr (io/writer answer-file)]
+        (.write wrtr "{}\n")))))
 
 (defn create-new-day-files [{:keys [year day-num]}]
   (printf "Creating day %04d.%02d\n" year day-num)
