@@ -14,12 +14,8 @@
 
 (defn valid-pos?
   ([grid [x y]] (valid-pos? grid x y))
-  ([grid x y] (and (<= 0 x (dec (:width grid)))
-                   (<= 0 y (dec (:height grid))))))
-
-(defn grid-positions [grid]
-  (for [x (range (:width grid)) y (range (:height grid))]
-    [x y]))
+  ([grid x y] (and (< -1 x (:width grid))
+                   (< -1 y (:height grid)))))
 
 (defn parse-map [input]
   (let [grid (->> input
@@ -49,50 +45,52 @@
    :down [0 1]
    :left [-1 0]})
 
-(defn walk-guard [floor visited]
-  (let [guard (:guard floor)
-        next-pos (map + guard (forward (:dir floor)))
-        walked-off? (not (valid-pos? floor next-pos))
-        blocked? (and (not walked-off?)
-                      (= \# (grid-at (:grid floor) next-pos)))]
-    (cond
-      walked-off? visited
-      blocked? (recur (assoc floor :dir (right-turn (:dir floor))) visited)
-      :else (recur (assoc floor :guard next-pos) (conj visited next-pos)))))
+(defn walk-guard [floor]
+  (loop [guard (:guard floor) dir (:dir floor) visited #{(:guard floor)}]
+    (let [next-pos (map + guard (forward dir))]
+      (cond
+        ;; Walked off edge
+        (not (valid-pos? floor next-pos)) visited
+
+        ;; Blocked, so turn right
+        (= \# (grid-at (:grid floor) next-pos)) (recur guard (right-turn dir) visited)
+
+        ;; Walk to the next position and add the current to visited
+        :else (recur next-pos dir (conj visited next-pos))))))
 
 (defn looping-guard? [floor]
-  (loop [floor floor visited #{}]
-    (let [{:keys [guard dir]} floor]
-      (if (contains? visited {:pos guard :dir dir})
-        true
-        (let [next-pos (map + guard (forward dir))]
-          (cond
-            ;; Walked off edge.
-            (not (valid-pos? floor next-pos)) false
+  (loop [guard (:guard floor) dir (:dir floor) visited #{}]
+    (if (contains? visited [guard dir])
+      true
+      (let [next-pos (map + guard (forward dir))]
+        (cond
+          ;; Walked off edge.
+          (not (valid-pos? floor next-pos)) false
 
-            ;; Blocked, so turn right
-            (= \# (grid-at (:grid floor) next-pos)) (recur (assoc floor :dir (right-turn dir))
-                                                           visited)
-            ;; Walk to the next position and add the current to visited
-            :else (recur (assoc floor :guard next-pos)
-                         (conj visited {:pos guard :dir dir}))))))))
+          ;; Blocked, so turn right
+          (= \# (grid-at (:grid floor) next-pos)) (recur guard (right-turn dir) visited)
+
+          ;; Walk to the next position and add the current to visited
+          :else (recur next-pos dir (conj visited [guard dir])))))))
 
 (defn place-obstruction [floor pos]
   (assoc floor :grid (set-at (:grid floor) pos \#)))
 
 (defn part1 [input]
   (let [floor (parse-map input)]
-    (count (walk-guard floor #{(:guard floor)}))))
+    (count (walk-guard floor))))
 
 ;; TODO: this is *way* too slow.
+;; Big performance suggestion from reddit discussion:
+;; https://www.reddit.com/r/adventofcode/comments/1h7tovg/2024_day_6_solutions/
+;; Only need to put obstacles in the path from part 1 as the guard
+;; won't run into the others.
 (defn part2 [input]
   (let [floor (parse-map input)
         guard (:guard floor)
-        open-spaces (filter #(and (not= % guard)
-                                  (= \. (grid-at (:grid floor) %)))
-                            (grid-positions floor))]
+        guard-path (disj (walk-guard floor) guard)]
     (count (filter #(looping-guard? (place-obstruction floor %))
-                   open-spaces))))
+                   guard-path))))
 
 (def day {:year 2024 :day-num 6,
           :name "Guard Gallivant"
