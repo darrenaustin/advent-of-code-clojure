@@ -23,13 +23,13 @@
 
 (defn part1
   ([day] (part1 day (day-input day)))
-  ([day input]
-   ((:part1 day) input)))
+  ([day input & args]
+   (apply (:part1 day) input args)))
 
 (defn part2
   ([day] (part2 day (day-input day)))
-  ([day input]
-   ((:part2 day) input)))
+  ([day input & args]
+   (apply (:part2 day) input args)))
 
 ;; From https://stackoverflow.com/questions/62724497/how-can-i-record-time-for-function-call-in-clojure
 (defmacro time-execution

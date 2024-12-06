@@ -8,6 +8,7 @@
    [aoc2015.day01]
    [aoc2015.day02]
    [aoc2015.day03]
+   [aoc2018.day06]
    [aoc2024.day01]
    [aoc2024.day02]
    [aoc2024.day03]
@@ -18,6 +19,7 @@
   [aoc2015.day01/day
    aoc2015.day02/day
    aoc2015.day03/day
+   aoc2018.day06/day
    aoc2024.day01/day
    aoc2024.day02/day
    aoc2024.day03/day
