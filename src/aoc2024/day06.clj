@@ -95,7 +95,7 @@
                    open-spaces))))
 
 (def day {:year 2024 :day-num 6,
-          :name ""
+          :name "Guard Gallivant"
           :part1 part1, :part2 part2})
 
 (comment
