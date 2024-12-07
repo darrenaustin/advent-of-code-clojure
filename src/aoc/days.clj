@@ -14,7 +14,8 @@
    [aoc2024.day03]
    [aoc2024.day04]
    [aoc2024.day05]
-   [aoc2024.day06]))
+   [aoc2024.day06]
+   [aoc2024.day07]))
 
 (def days
   [aoc2015.day01/day
@@ -26,4 +27,5 @@
    aoc2024.day03/day
    aoc2024.day04/day
    aoc2024.day05/day
-   aoc2024.day06/day])
+   aoc2024.day06/day
+   aoc2024.day07/day])
