@@ -83,7 +83,7 @@
      (count (filter #(within-dist? % coords dist) (map-positions bounds))))))
 
 (def day {:year 2018 :day-num 6,
-          :name ""
+          :name "Chronal Coordinates"
           :part1 part1, :part2 part2})
 
 (comment

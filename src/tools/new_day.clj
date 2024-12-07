@@ -27,7 +27,7 @@
         (.write wrtr "(defn part2 [input])\n")
         (.write wrtr "\n")
         (.write wrtr (format "(def day {:year %d :day-num %d,\n" year day-num))
-        (.write wrtr "          :name \"\"\n")
+        (.write wrtr "          :name \"<INSERT NAME>\"\n")
         (.write wrtr "          :part1 part1, :part2 part2})\n")
         (.write wrtr "\n")
         (.write wrtr "(comment\n")
