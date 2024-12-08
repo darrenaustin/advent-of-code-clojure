@@ -1,14 +1,15 @@
-(ns aoc.util.grid)
+(ns aoc.util.grid
+  (:require
+   [clojure.string :as str]))
 
-(defprotocol GridFns
-  (width [this])
-  (height [this])
-  (cell [this pos])
-  (set-cell [this pos value]))
+(defn parse-grid [input]
+  (let [lines (str/split-lines input)]
+    (into {}
+          (for [x (range (count (first lines)))
+                y (range (count lines))]
+            [[x y] (get-in lines [y x])]))))
 
-(defrecord Grid [width height values]
-  GridFns
-  (width [_] width)
-  (height [_] height)
-  (cell [_ [x y]] (get (get values x) y))
-  (set-cell [_ [x y] value] (assoc-in values [y x] value)))
+(def origin [0 0])
+
+(defn vec+ [a b] (map + a b))
+(defn vec- [a b] (map - a b))

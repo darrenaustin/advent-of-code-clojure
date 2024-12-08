@@ -2,88 +2,37 @@
 (ns aoc2024.day08
   (:require
    [aoc.day :as d]
-   [clojure.string :as str]
+   [aoc.util.grid :refer [parse-grid vec+ vec-]]
    [clojure.math.combinatorics :as combo]))
 
 (def input (d/day-input 2024 8))
 
-;; TODO: cleanup the grid and the later traversals.
+(defn antennas [grid]
+  (map keys (map val (dissoc (group-by val grid) \.))))
 
-(defn grid-at
-  ([grid [x y]] (grid-at grid x y))
-  ([grid x y] (get (get grid y) x)))
+(defn antinodes [valid-pos? [a b]]
+  (let [dir (vec- b a)]
+    (filter valid-pos? [(vec- a dir) (vec+ b dir)])))
 
-(defn vec+ [[ax ay] [bx by]]
-  [(+ ax bx) (+ ay by)])
+(defn super-antinodes [valid-loc? [a b]]
+  (let [dir (vec- b a)]
+    (concat
+     (take-while valid-loc? (iterate #(vec- % dir) a))
+     (take-while valid-loc? (iterate #(vec+ % dir) b)))))
 
-(defn vec-
-  ([[ax ay]] (vec- [0 0] [ax ay]))
-  ([[ax ay] [bx by]]
-   [(- ax bx) (- ay by)]))
+(defn find-nodes [finder-fn locs]
+  (mapcat finder-fn (combo/combinations locs 2)))
 
-(defn valid-pos? [[x y] [width height]]
-  (and (< -1 x width)
-       (< -1 y height)))
-
-(defn find-antennas [grid]
-  (let [{:keys [bounds grid]} grid
-        [width height] bounds]
-    (into {}
-          (map (fn [[key value]]
-                 [key (mapcat rest value)])
-               (group-by first
-                         (for [x (range width) y (range height)
-                               :let [v (grid-at grid x y)]
-                               :when (not= \. v)]
-                           [v [x y]]))))))
-
-(defn traverse-line [pos dir bounds limit]
-  (let [points (take-while #(valid-pos? % bounds)
-                           (iterate #(vec+ % dir) pos))]
-    (if limit
-      (take limit points)
-      points)))
-
-(defn antinodes [[a b] bounds]
-  (let [v (vec- b a)
-        a1 (vec- a v)
-        a2 (vec+ b v)]
-    (filter #(valid-pos? % bounds)
-            [a1 a2])))
-
-(defn antinodes-on-line [[a b] bounds & {:keys [limit] :or {limit nil}}]
-  (let [v (vec- b a)]
-    (concat (traverse-line a (vec- v) bounds limit)
-            (traverse-line b v bounds limit))))
-
-(defn parse-map [input]
-  (let [grid (->> input
-                  str/split-lines
-                  (map vec)
-                  (into []))
-        width (count (first grid))
-        height (count grid)]
-    {:grid grid
-     :bounds [width height]}))
+(defn num-antinodes [input antinode-fn]
+  (let [grid (parse-grid input)
+        valid-loc? (partial contains? grid)
+        antennas (antennas grid)
+        anitnode-finder (partial antinode-fn valid-loc?)]
+    (count
+     (into #{} (mapcat #(find-nodes anitnode-finder %) antennas)))))
 
 (defn part1 [input]
-  (let [g (parse-map input)
-        bounds (:bounds g)
-        antennas (find-antennas g)]
-    (count
-     (set
-      (mapcat (fn [[_ ts]]
-                (mapcat #(antinodes % bounds)
-                        (combo/combinations ts 2)))
-              antennas)))))
+  (num-antinodes input antinodes))
 
 (defn part2 [input]
-  (let [g (parse-map input)
-        bounds (:bounds g)
-        antennas (find-antennas g)]
-    (count
-     (set
-      (mapcat (fn [[_ ts]]
-                (mapcat #(antinodes-on-line % bounds)
-                        (combo/combinations ts 2)))
-              antennas)))))
+  (num-antinodes input super-antinodes))
