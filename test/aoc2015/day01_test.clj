@@ -1,32 +1,26 @@
 (ns aoc2015.day01-test
-  (:require [aoc.day :refer [day-answers part1 part2]]
-            [aoc2015.day01 :refer [day]]
-            [clojure.test :refer [deftest is testing]]))
+  (:require [aoc.day :refer [day-answers]]
+            [aoc2015.day01 :as d]
+            [clojure.test :refer [deftest are is]]))
 
-(deftest part1-test-examples
-  (testing "part 1 examples"
-    (is (= 0 (part1 day "(())")))
-    (is (= 0 (part1 day "()()")))
-    (is (= 3 (part1 day "(((")))
-    (is (= 3 (part1 day "(()(()(")))
-    (is (= 3 (part1 day "))(((((")))
-    (is (= -1 (part1 day "())")))
-    (is (= -1 (part1 day "))(")))
-    (is (= -3 (part1 day ")))")))
-    (is (= -3 (part1 day ")())())")))))
+(deftest part1-examples
+  (are [expected input] (= expected (d/part1 input))
+    0  "(())"
+    0  "()()"
+    3  "((("
+    3  "(()(()("
+    3  "))((((("
+    -1 "())"
+    -1 "))("
+    -3 ")))"
+    -3 ")())())"))
 
-(deftest part1-test
-  (testing "part1 correct answer"
-    (let [answer (:answer1 (day-answers day))]
-      (is (= answer (part1 day))))))
+(deftest part2-example
+  (are [expected input] (= expected (d/part2 input))
+    1 ")"
+    5 "()())"))
 
-(deftest part2-test-example
-  (testing "part 2 example"
-    (is (= 1 (part2 day ")")))
-    (is (= 5 (part2 day "()())")))))
-
-(deftest part2-test
-  (testing "part2 correct answer"
-    (let [answer (:answer2 (day-answers day))]
-      (is (= answer (part2 day))))))
-
+(deftest correct-answers
+  (let [{:keys [answer1 answer2]} (day-answers 2015 1)]
+    (is (= answer1 (d/part1 d/input)))
+    (is (= answer2 (d/part2 d/input)))))

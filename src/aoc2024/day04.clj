@@ -1,10 +1,12 @@
-;; https://adventofcode.com/2024/day/04
-
+;; https://adventofcode.com/2024/day/4
 (ns aoc2024.day04
   (:require
+   [aoc.day :as d]
    [aoc.util.collection :as c]
    [aoc.util.math :as m]
    [clojure.string :as str]))
+
+(def input (d/day-input 2024 4))
 
 (defn parse-grid [input]
   (->> input
@@ -63,14 +65,3 @@
 
 (defn part2 [input]
   (x-mas-in (parse-grid input)))
-
-(def day {:year 2024 :day-num 4,
-          :name "Ceres Search"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )

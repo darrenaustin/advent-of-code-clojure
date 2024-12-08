@@ -1,10 +1,12 @@
-;; https://adventofcode.com/2024/day/05
-
+;; https://adventofcode.com/2024/day/5
 (ns aoc2024.day05
   (:require
+   [aoc.day :as d]
+   [aoc.util.math :as m]
    [aoc.util.string :as s]
-   [clojure.string :as str]
-   [aoc.util.math :as m]))
+   [clojure.string :as str]))
+
+(def input (d/day-input 2024 5))
 
 (defn parse-input [input]
   (->> (str/split input #"\n\n")
@@ -41,14 +43,3 @@
         rules-comparator (rules-compare rules)
         incorrect-orders (filter #(not (follows-rules? % rules)) orders)]
     (m/sum (map middle (map #(sort rules-comparator %) incorrect-orders)))))
-
-(def day {:year 2024 :day-num 5,
-          :name "Print Queue"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )

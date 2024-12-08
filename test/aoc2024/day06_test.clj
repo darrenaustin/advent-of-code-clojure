@@ -1,9 +1,10 @@
 (ns aoc2024.day06-test
-  (:require [aoc.day :refer [day-answers part1 part2]]
-            [aoc2024.day06 :refer [day]]
-            [clojure.test :refer [deftest is testing]]))
+  (:require [aoc.day :refer [day-answers]]
+            [aoc2024.day06 :as d]
+            [clojure.test :refer [deftest is]]))
 
-(def example-input "....#.....
+(def example-input
+  "....#.....
 .........#
 ..........
 ..#.......
@@ -15,19 +16,12 @@
 ......#...")
 
 (deftest part1-test-example
-  (testing "part 1 example"
-    (is (= 41 (part1 day example-input)))))
+  (is (= 41 (d/part1 example-input))))
 
 (deftest part2-test-example
-  (testing "part 2 example"
-    (is (= 6 (part2 day example-input)))))
+  (is (= 6 (d/part2 example-input))))
 
-(deftest part1-test
-  (testing "part1 correct answer"
-    (let [answer (:answer1 (day-answers day))]
-      (is (= answer (part1 day))))))
-
-(deftest part2-test
-  (testing "part2 correct answer"
-    (let [answer (:answer2 (day-answers day))]
-      (is (= answer (part2 day))))))
+(deftest correct-answers
+  (let [{:keys [answer1 answer2]} (day-answers 2024 6)]
+    (is (= answer1 (d/part1 d/input)))
+    (is (= answer2 (d/part2 d/input)))))

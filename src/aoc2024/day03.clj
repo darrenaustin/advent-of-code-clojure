@@ -1,7 +1,11 @@
+;; https://adventofcode.com/2024/day/3
 (ns aoc2024.day03
   (:require
+   [aoc.day :as d]
    [aoc.util.math :as m]
    [aoc.util.string :as s]))
+
+(def input (d/day-input 2024 3))
 
 (defn mult-instruction [instruction]
   (apply * (s/parse-nums instruction)))
@@ -18,7 +22,3 @@
         "don't()" (recur (drop-while #(not= % "do()") commands) sum)
         (recur (rest commands) (+ sum (mult-instruction command))))
       sum)))
-
-(def day {:year 2024 :day-num 3,
-          :name "Mull It Over"
-          :part1 part1, :part2 part2})

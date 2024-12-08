@@ -1,7 +1,11 @@
+;; https://adventofcode.com/2024/day/2
 (ns aoc2024.day02
   (:require
+   [aoc.day :as d]
    [aoc.util.string :as s]
    [clojure.string :as str]))
+
+(def input (d/day-input 2024 2))
 
 (defn parse-reports [input]
   (->> input
@@ -26,7 +30,3 @@
 
 (defn part2 [input]
   (count (filter safe-ish (parse-reports input))))
-
-(def day {:year 2024 :day-num 2,
-          :name "Red-Nosed Reports"
-          :part1 part1, :part2 part2})

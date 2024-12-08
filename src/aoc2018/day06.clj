@@ -1,10 +1,12 @@
-;; https://adventofcode.com/2018/day/06
-
+;; https://adventofcode.com/2018/day/6
 (ns aoc2018.day06
   (:require
    [aoc.util.math :as m]
    [aoc.util.string :as s]
+   [aoc.day :as d]
    [clojure.string :as str]))
+
+(def input (d/day-input 2018 6))
 
 (defn parse-coords [input]
   (->> input
@@ -81,14 +83,3 @@
    (let [coords (parse-coords input)
          bounds (map-bounds coords)]
      (count (filter #(within-dist? % coords dist) (map-positions bounds))))))
-
-(def day {:year 2018 :day-num 6,
-          :name "Chronal Coordinates"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )

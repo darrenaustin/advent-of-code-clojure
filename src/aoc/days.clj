@@ -16,16 +16,3 @@
    [aoc2024.day05]
    [aoc2024.day06]
    [aoc2024.day07]))
-
-(def days
-  [aoc2015.day01/day
-   aoc2015.day02/day
-   aoc2015.day03/day
-   aoc2018.day06/day
-   aoc2024.day01/day
-   aoc2024.day02/day
-   aoc2024.day03/day
-   aoc2024.day04/day
-   aoc2024.day05/day
-   aoc2024.day06/day
-   aoc2024.day07/day])

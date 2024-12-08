@@ -1,29 +1,40 @@
 (ns aoc.core
   (:require
-   [aoc.day :as day]
-   [aoc.days :refer [days]])
+   [aoc.day :as d]
+   [aoc.days])
   (:gen-class))
 
-(defn matching-day? [day filters]
-  (some
-   (fn [{:keys [year day-num]}]
-     (and (= (:year day) year)
-          (or (= (:day-num day) day-num)
-              (nil? day-num))))
-   filters))
+(defn all-days []
+  (sort
+   (transduce
+    (comp (map ns-name)
+          (map name)
+          (map #(re-find #"aoc(\d+).day(\d+)$" %))
+          (filter identity) ;; Remove nils
+          (map (fn [[_ ys ds]] [(Integer/parseInt ys) (Integer/parseInt ds)])))
+    conj
+    (all-ns))))
 
-(defn filter-days [filters days]
-  (if (seq filters)
-    (filter #(matching-day? % filters) days)
+(defn matching-day? [[year day-num] specs]
+  (some
+   (fn [[spec-year spec-day-num]]
+     (and (= year spec-year)
+          (or (= day-num spec-day-num)
+              (nil? spec-day-num))))
+   specs))
+
+(defn specified-days [specs days]
+  (if (seq specs)
+    (filter #(matching-day? % specs) days)
     days))
 
-(defn parse-filter [s]
+(defn parse-day-specs [s]
   (if-let [[_ year _ day-num] (re-find #"(\d+)(\.(\d+))?" s)]
-    {:year (when year (Integer/parseInt year))
-     :day-num (when day-num (Integer/parseInt day-num))}
+    [(when year (read-string year))
+     (when day-num (read-string day-num))]
     (throw (Exception. (format "Invalid year.day argument: %s" s)))))
 
 (defn -main [& args]
-  (let [filters (map parse-filter args)]
-    (doseq [day (filter-days filters days)]
-      (day/execute day))))
+  (let [day-specs (map parse-day-specs args)]
+    (doseq [[year day] (specified-days day-specs (all-days))]
+      (d/execute year day))))

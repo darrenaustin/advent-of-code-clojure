@@ -1,6 +1,9 @@
-;; https://adventofcode.com/2015/day/03
+;; https://adventofcode.com/2015/day/3
+(ns aoc2015.day03
+  (:require
+   [aoc.day :as d]))
 
-(ns aoc2015.day03)
+(def input (d/day-input 2015 3))
 
 (def dirs {\^ [0 -1]
            \v [0 1]
@@ -20,14 +23,3 @@
 
 (defn part2 [input]
   (count (packages-delivered input [[0 0] [0 0]] #{[0 0]})))
-
-(def day {:year 2015 :day-num 3,
-          :name "Perfectly Spherical Houses in a Vacuum"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )

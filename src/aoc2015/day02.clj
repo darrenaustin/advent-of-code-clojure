@@ -1,8 +1,12 @@
+;; https://adventofcode.com/2015/day/2
 (ns aoc2015.day02
   (:require
+   [aoc.day :as d]
    [aoc.util.math :as m]
    [aoc.util.string :as s]
    [clojure.string :as str]))
+
+(def input (d/day-input 2015 2))
 
 (defn parse-boxes [input]
   (->> input
@@ -26,7 +30,3 @@
 
 (defn part2 [input]
   (m/sum (map ribbon-for (parse-boxes input))))
-
-(def day {:year 2015 :day-num 2,
-          :name "I Was Told There Would Be No Math"
-          :part1 part1, :part2 part2})

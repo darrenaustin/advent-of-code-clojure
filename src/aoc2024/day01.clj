@@ -1,9 +1,13 @@
+;; https://adventofcode.com/2024/day/1
 (ns aoc2024.day01
   (:require
+   [aoc.day :as d]
    [aoc.util.collection :as c]
    [aoc.util.math :as m]
    [aoc.util.string :as s]
    [clojure.string :as str]))
+
+(def input (d/day-input 2024 1))
 
 (defn parse-locations [input]
   (->> input
@@ -22,7 +26,3 @@
   (let [[left right] (parse-locations input)
         freqs (frequencies right)]
     (m/sum (map #(similarity % freqs) left))))
-
-(def day {:year 2024 :day-num 1,
-          :name "Historian Hysteria"
-          :part1 part1, :part2 part2})

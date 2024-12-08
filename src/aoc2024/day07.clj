@@ -1,11 +1,13 @@
-;; https://adventofcode.com/2024/day/07
-
+;; https://adventofcode.com/2024/day/7
 (ns aoc2024.day07
   (:require
+   [aoc.day :as d]
    [aoc.util.math :as m]
    [aoc.util.string :as s]
    [clojure.edn :as edn]
    [clojure.string :as str]))
+
+(def input (d/day-input 2024 7))
 
 (defn parse-equations [input]
   (->> input
@@ -40,14 +42,3 @@
       (filter #(possible-equation? % [+ * ||]))
       (map first)
       m/sum))
-
-(def day {:year 2024 :day-num 7,
-          :name "Bridge Repair"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )

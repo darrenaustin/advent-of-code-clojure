@@ -1,6 +1,10 @@
+;; https://adventofcode.com/2015/day/1
 (ns aoc2015.day01
   (:require
+   [aoc.day :as d]
    [aoc.util.math :as m]))
+
+(def input (d/day-input 2015 1))
 
 (def floor-dirs {\( 1, \) -1})
 
@@ -17,7 +21,3 @@
          (conj stops [floor idx]))))
    [[0 0]]
    input))
-
-(def day {:year 2015 :day-num 1,
-          :name "Not Quite Lisp"
-          :part1 part1, :part2 part2})

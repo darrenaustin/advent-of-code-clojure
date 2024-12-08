@@ -1,8 +1,10 @@
-;; https://adventofcode.com/2024/day/06
-
+;; https://adventofcode.com/2024/day/6
 (ns aoc2024.day06
   (:require
+   [aoc.day :as d]
    [clojure.string :as str]))
+
+(def input (d/day-input 2024 6))
 
 (defn grid-at
   ([grid [x y]] (grid-at grid x y))
@@ -91,14 +93,3 @@
         guard-path (disj (walk-guard floor) guard)]
     (count (filter #(looping-guard? (place-obstruction floor %))
                    guard-path))))
-
-(def day {:year 2024 :day-num 6,
-          :name "Guard Gallivant"
-          :part1 part1, :part2 part2})
-
-(comment
-  (require '[aoc.day :as d])
-  (part1 (d/day-input day))
-  (part2 (d/day-input day))
-  ;
-  )
