@@ -26,8 +26,7 @@
         (.write wrtr "\n")
         (.write wrtr "(defn part1 [input])\n")
         (.write wrtr "\n")
-        (.write wrtr "(defn part2 [input])\n")
-        (.write wrtr "\n")))))
+        (.write wrtr "(defn part2 [input])\n")))))
 
 (defn create-test-year-dir [year]
   (let [dir (io/file (format "test/aoc%04d" year))]
