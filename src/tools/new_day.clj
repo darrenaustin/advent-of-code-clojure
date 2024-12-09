@@ -41,7 +41,7 @@
         (.write wrtr (format "(ns aoc%04d.day%02d-test\n" year day-num))
         (.write wrtr "  (:require [aoc.day :refer [day-answers]]\n")
         (.write wrtr (format "            [aoc%04d.day%02d :as d]\n" year day-num))
-        (.write wrtr "            [clojure.test :refer [deftest are is]]))\n")
+        (.write wrtr "            [clojure.test :refer :all]))\n")
         (.write wrtr "\n")
         (.write wrtr "(def example-input\n")
         (.write wrtr "  \"\")\n")
@@ -60,7 +60,7 @@
         (.write wrtr "  (are [expected input] (= expected (d/part2 input))\n")
         (.write wrtr "    nil \"\"))\n")
         (.write wrtr "\n") (.write wrtr "(deftest correct-answers\n")
-        (.write wrtr "  (let [{:keys [answer1 answer2]} (day-answers 2024 8)]\n")
+        (.write wrtr (format "  (let [{:keys [answer1 answer2]} (day-answers %d %d)]\n" year day-num))
         (.write wrtr "    (is (= answer1 (d/part1 d/input)))\n")
         (.write wrtr "    (is (= answer2 (d/part2 d/input)))))\n")))))
 
