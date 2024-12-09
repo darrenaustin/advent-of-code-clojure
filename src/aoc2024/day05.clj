@@ -28,11 +28,10 @@
 (defn rules-compare [rules]
   (let [rules (set rules)]
     (fn [a b]
-      (if (contains? rules [a b])
-         -1
-         (if (contains? rules [b a])
-           1
-           0)))))
+      (cond
+        (contains? rules [a b]) -1
+        (contains? rules [b a])  1
+        :else                    0))))
 
 (defn part1 [input]
   (let [[rules orders] (parse-input input)]

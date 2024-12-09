@@ -3,65 +3,40 @@
   (:require
    [aoc.day :as d]
    [aoc.util.collection :as c]
-   [aoc.util.math :as m]
-   [clojure.string :as str]))
+   [aoc.util.grid :refer :all]
+   [aoc.util.math :as m]))
 
 (def input (d/day-input 2024 4))
 
-(defn parse-grid [input]
-  (->> input
-       str/split-lines
-       (map vec)
-       (into [])))
-
-(defn grid-value [grid [x y]]
-  (let [width (count (first grid))
-        height (count grid)]
-    (when (and (< -1 x width) (< -1 y height))
-      (nth (nth grid x) y))))
-
-;; cardinal directions
-(def dirs
-  (for [x [-1 0 1] y [-1 0 1] :when (not= 0 x y)]
-    [x y]))
-
 (def xmas (c/indexed "XMAS"))
 
-(defn xmas-in-dir? [grid [x y] [dx dy]]
+(defn xmas-in-dir? [grid loc dir]
   (every?
    (fn [[idx letter]]
-     (= (grid-value grid [(+ x (* idx dx)) (+ y (* idx dy))]) letter))
+     (= (grid (vec+ loc (vec-n* idx dir))) letter))
    xmas))
 
 (defn count-xmas-at [grid pos]
-  (count (filter #(xmas-in-dir? grid pos %) dirs)))
+  (count (filter #(xmas-in-dir? grid pos %) cardinal-dirs)))
 
 (defn xmas-in [grid]
-  (m/sum
-   (for [y (range 0 (count grid))
-         x (range 0 (count (first grid)))]
-     (count-xmas-at grid [x y]))))
+  (m/sum (map #(count-xmas-at grid %) (keys grid))))
 
-(defn part1 [input]
-  (xmas-in (parse-grid input)))
+
+(defn part1 [input] (xmas-in (parse-grid input)))
 
 (defn x-mas-at? [grid pos]
   ;; assumes there is an 'A' in the grid at pos.
-  (let [left-up (grid-value grid (mapv + pos [-1 -1]))
-        left-down (grid-value grid (mapv + pos [-1 1]))
-        right-up (grid-value grid (mapv + pos [1 -1]))
-        right-down (grid-value grid (mapv + pos [1 1]))]
+  (let [left-up (grid (vec+ pos dir-nw))
+        left-down (grid (vec+ pos dir-sw))
+        right-up (grid (vec+ pos dir-ne))
+        right-down (grid (vec+ pos dir-se))]
     (= #{\M \S} (set [left-up right-down]) (set [left-down right-up]))))
 
 (defn x-mas-in [grid]
   (count
-   (let [a-positions
-         (for [y (range 0 (count grid))
-               x (range 0 (count (first grid)))
-               :let [pos [x y]]
-               :when (= \A (grid-value grid pos))]
-           pos)]
-     (filter #(x-mas-at? grid %) a-positions))))
+   (filter #(x-mas-at? grid %)
+             ;; Find all the "A" locations in the grid
+           (map key (filter (fn [[_ v]] (= \A v)) grid)))))
 
-(defn part2 [input]
-  (x-mas-in (parse-grid input)))
+(defn part2 [input] (x-mas-in (parse-grid input)))
