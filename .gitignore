@@ -16,5 +16,6 @@ pom.xml.asc
 .calva/
 .vscode/
 .clj-kondo/.cache/
+.clj-kondo/imports/
 *.code-workspace
 .session
