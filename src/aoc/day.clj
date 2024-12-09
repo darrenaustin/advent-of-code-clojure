@@ -1,6 +1,6 @@
 (ns aoc.day
-  (:require [clojure.string :as string]
-            [clojure.data.json :as json]))
+  (:require [clojure.data.json :as json]
+            [clojure.string :as string]))
 
 ;; TODO: add a way to override this with an env var.
 (defn input-repo-dir [] "../advent_of_code_input")
@@ -20,10 +20,6 @@
   (try
     (json/read-str (slurp (answer-file-name year day-num)) :key-fn keyword)
     (catch Exception _ {})))
-
-(defn require-day-ns [year day-num]
-  (let [name (symbol (format "aoc%d.day%02d" year day-num))]
-    (require name)))
 
 (defn day-var [year day-num var-name]
   (find-var (symbol (format "aoc%d.day%02d/%s" year day-num var-name))))
