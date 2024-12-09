@@ -4,4 +4,4 @@
   (apply map vector coll))
 
 (defn indexed [coll]
-  (map vector (range (count coll)) coll))
+  (mapv vector (range (count coll)) coll))
