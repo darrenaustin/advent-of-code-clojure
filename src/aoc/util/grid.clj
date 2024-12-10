@@ -33,8 +33,10 @@
 (defn orthoginal-from [[x y]]
   [[x (dec y)] [(inc x) y] [x (inc y)] [(dec x) y]])
 
-(defn cardinal-from [pos]
-  (map (partial vec+ pos) cardinal-dirs))
+(defn cardinal-from [[x y]]
+  [[(dec x) (dec y)] [x (dec y)] [(inc x) (dec y)]
+   [(dec x)       y]             [(inc x)       y]
+   [(dec x) (inc y)] [x (inc y)] [(inc x) (inc y)]])
 
 (defn parse-grid
   ([input] (parse-grid input identity))
