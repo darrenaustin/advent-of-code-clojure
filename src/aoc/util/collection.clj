@@ -5,3 +5,6 @@
 
 (defn indexed [coll]
   (mapv vector (range (count coll)) coll))
+
+(defn group-by-value [m]
+  (reduce (fn [m [k v]] (update m v conj k)) {} m))

@@ -2,41 +2,38 @@
 (ns aoc2024.day10
   (:require
    [aoc.day :as d]
+   [aoc.util.collection :as c]
    [aoc.util.grid :refer :all]
    [aoc.util.math :as m]
    [aoc.util.string :as s]))
 
 (def input (d/day-input 2024 10))
 
-(defn update-goal-from [grid goals n pos]
-  (let [gs (goals pos)
-        neighbors (filter #(and (contains? grid %)
-                                (= (grid %) (dec n)))
-                          (orthoginal-from pos))]
+(defn update-summits-from [grid summits loc]
+  (let [target (dec (grid loc))
+        loc-summits (summits loc)]
     (reduce (fn [goals neighbor]
-              (update goals neighbor concat gs))
-            goals
-            neighbors)))
+              (update goals neighbor concat loc-summits))
+            summits
+            (filter #(= target (grid %)) (orthoginal-from loc)))))
 
-(defn summit-reachable-map [grid]
-  (let [groups (into {} (mapv (fn [[k v]] [k (mapv first v)])
-                              (group-by (fn [[_ v]] v) grid)))]
-    (reduce (fn [gs n]
-              (let [n-pos (groups n)]
-                (reduce (fn [gs pos] (update-goal-from grid gs n pos))
-                        gs
-                        n-pos)))
-            (into {} (map (fn [p] [p [p]]) (groups 9)))
+(defn summits-reachable-map [grid]
+  (let [num-locs (c/group-by-value grid)]
+    (reduce (fn [summits n]
+              (reduce (partial update-summits-from grid)
+                      summits
+                      (num-locs n)))
+            (into {} (map (fn [p] [p [p]]) (num-locs 9)))
             (range 9 0 -1))))
 
-(defn part1 [input]
+(defn count-trails [input coll-fn]
   (let [grid (parse-grid input s/digit)
-        trailheads (locs-where grid #{0})
-        reachable-summits (summit-reachable-map grid)]
-    (m/sum (map count (map set (map reachable-summits trailheads))))))
+        summits-reachable (summits-reachable-map grid)
+        trailheads (locs-where grid #{0})]
+    (m/sum (map (comp count coll-fn summits-reachable) trailheads))))
+
+(defn part1 [input]
+  (count-trails input set))
 
 (defn part2 [input]
-    (let [grid (parse-grid input s/digit)
-        trailheads (locs-where grid #{0})
-        reachable-summits (summit-reachable-map grid)]
-    (m/sum (map count (map reachable-summits trailheads)))))
+  (count-trails input identity))

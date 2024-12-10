@@ -30,8 +30,8 @@
 (defn vec- [a b] (mapv - a b))
 (defn vec-n* [n a] (mapv #(* n %) a))
 
-(defn orthoginal-from [pos]
-  (map (partial vec+ pos) orthoginal-dirs))
+(defn orthoginal-from [[x y]]
+  [[x (dec y)] [(inc x) y] [x (inc y)] [(dec x) y]])
 
 (defn cardinal-from [pos]
   (map (partial vec+ pos) cardinal-dirs))
