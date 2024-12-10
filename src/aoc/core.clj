@@ -10,7 +10,7 @@
     (comp (map ns-name)
           (map name)
           (map #(re-find #"aoc(\d+).day(\d+)$" %))
-          (filter identity) ;; Remove nils
+          (remove nil?)
           (map (fn [[_ ys ds]] [(Integer/parseInt ys) (Integer/parseInt ds)])))
     conj
     (all-ns))))

@@ -43,8 +43,12 @@
   (let [correct (cond
                   (nil? expected) ""
                   (= answer expected) "correct, "
-                  :else "INCORRECT, ")]
-    (println (format "%s, %s%s ms" answer correct time))))
+                  :else "INCORRECT, ")
+        [secs ms] [(quot time 1000) (rem time 1000)]
+        time-desc (if (zero? secs)
+                    (str ms "ms")
+                    (str secs "s " ms "ms <TOO SLOW>"))]
+    (println (format "%s, %s%s" answer correct time-desc))))
 
 (defn execute [year day-num]
   (let [input (or (day-val year day-num "input") "")
