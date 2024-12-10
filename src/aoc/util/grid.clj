@@ -30,6 +30,12 @@
 (defn vec- [a b] (mapv - a b))
 (defn vec-n* [n a] (mapv #(* n %) a))
 
+(defn orthoginal-from [pos]
+  (map (partial vec+ pos) orthoginal-dirs))
+
+(defn cardinal-from [pos]
+  (map (partial vec+ pos) cardinal-dirs))
+
 (defn parse-grid
   ([input] (parse-grid input identity))
   ([input value-fn]

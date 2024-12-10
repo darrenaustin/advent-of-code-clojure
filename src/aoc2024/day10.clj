@@ -12,7 +12,7 @@
   (let [gs (goals pos)
         neighbors (filter #(and (contains? grid %)
                                 (= (grid %) (dec n)))
-                          (mapv #(vec+ pos %) orthoginal-dirs))]
+                          (orthoginal-from pos))]
     (reduce (fn [goals neighbor]
               (update goals neighbor concat gs))
             goals
