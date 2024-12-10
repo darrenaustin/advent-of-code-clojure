@@ -30,12 +30,14 @@
 (defn vec- [a b] (mapv - a b))
 (defn vec-n* [n a] (mapv #(* n %) a))
 
-(defn parse-grid [input]
-  (let [lines (str/split-lines input)]
-    (into {}
-          (for [x (range (count (first lines)))
-                y (range (count lines))]
-            [[x y] (get-in lines [y x])]))))
+(defn parse-grid
+  ([input] (parse-grid input identity))
+  ([input value-fn]
+   (let [lines (str/split-lines input)]
+     (into {}
+           (for [x (range (count (first lines)))
+                 y (range (count lines))]
+             [[x y] (value-fn (get-in lines [y x]))])))))
 
 (defn bounds [grid]
   (reduce (fn [[min-loc max-loc] [loc _]]
