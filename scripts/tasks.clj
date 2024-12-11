@@ -18,11 +18,14 @@
 (defn- problem-url [y d] (str aoc-url "/" y "/day/" d))
 (defn- input-url   [y d] (str (problem-url y d) "/input"))
 
-(defn- source-path [y d] (format "src/aoc%d/day%02d.clj" y d))
-(defn- test-path   [y d] (format "test/aoc%d/day%02d_test.clj" y d))
+(defn- source-dir  [y]   (str "src/aoc" y))
+(defn- source-path [y d] (format "%s/day%02d.clj" (source-dir y) d))
+(defn- test-dir    [y]   (str "test/aoc" y))
+(defn- test-path   [y d] (format "%s/day%02d_test.clj" (test-dir y) d))
 ;; TODO: add a way to override this with an env var.
-(defn- input-path  [y d] (format "../advent_of_code_input/%d/%02d_input.txt" y d))
-(defn- answer-path [y d] (format "../advent_of_code_input/%d/%02d_answer.json" y d))
+(defn- input-dir   [y]   (str "../advent_of_code_input/" y))
+(defn- input-path  [y d] (format "%s/%02d_input.txt" (input-dir y) d))
+(defn- answer-path [y d] (format "%s/%02d_answer.json" (input-dir y) d))
 
 (def days-file "src/aoc/days.clj")
 
@@ -51,8 +54,11 @@
                :day (Integer/parseInt day)}))))
 
 (defn- create-day-files [{:keys [year day] :as date}]
+  (fs/create-dirs (source-dir year))
   (create-file (source-path year day) "templates/src.clj.tmpl" date)
+  (fs/create-dirs (test-dir year))
   (create-file (test-path   year day) "templates/test.clj.tmpl" date)
+  (fs/create-dirs (input-dir year))
   (create-file (input-path  year day) "templates/input.txt.tmpl" date)
   (create-file (answer-path year day) "templates/answer.json.tmpl" date))
 
