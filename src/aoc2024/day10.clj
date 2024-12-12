@@ -15,7 +15,7 @@
     (reduce (fn [goals neighbor]
               (update goals neighbor concat loc-summits))
             summits
-            (filter #(= target (grid %)) (orthoginal-from loc)))))
+            (filter #(= target (grid %)) (orthogonal-from loc)))))
 
 (defn summits-reachable-map [grid]
   (let [num-locs (c/group-by-value grid)]

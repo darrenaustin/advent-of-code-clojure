@@ -21,3 +21,4 @@ pom.xml.asc
 *.iml
 .idea/
 .session
+hs_err_pid*.log
